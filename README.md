@@ -1,6 +1,42 @@
-# 🚀 Vorngram - Complete Telegram Platform & Mobile Client
+```
+██╗   ██╗ ██████╗ ██████╗ ███╗   ██╗ ██████╗ ██████╗  █████╗ ███╗   ███╗
+██║   ██║██╔═══██╗██╔══██╗████╗  ██║██╔════╝ ██╔══██╗██╔══██╗████╗ ████║
+██║   ██║██║   ██║██████╔╝██╔██╗ ██║██║  ███╗██████╔╝███████║██╔████╔██║
+╚██╗ ██╔╝██║   ██║██╔══██╗██║╚██╗██║██║   ██║██╔══██╗██╔══██║██║╚██╔╝██║
+ ╚████╔╝ ╚██████╔╝██║  ██║██║ ╚████║╚██████╔╝██║  ██║██║  ██║██║ ╚═╝ ██║
+  ╚═══╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝
 
-Vorngram is a full-featured Telegram client and real-time communication platform featuring direct MTProto TDLib connection (zero server needed), real-time WebRTC audio/video calling, a Telegram Bot bridge, and a custom message studio.
+                   ██████╗  █████╗ ███╗   ███╗██████╗  ██████╗ 
+                  ██╔════╝ ██╔══██╗████╗ ████║██╔══██╗██╔═══██╗
+                  ██║      ███████║██╔████╔██║██████╔╝██║   ██║
+                  ██║      ██╔══██║██║╚██╔╝██║██╔══██╗██║   ██║
+                  ╚██████╗ ██║  ██║██║ ╚═╝ ██║██████╔╝╚██████╔╝
+                   ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝  ╚═════╝ 
+```
+
+<div align="center">
+
+### 🇰🇭 Vorngram Cambo • Next-Gen Telegram Client & WebRTC Platform
+**Real-Time MTProto Messaging • Zero-Server Native Client • WebRTC Voice/Video Calling • Bot Bridge**
+
+[![GitHub](https://img.shields.io/badge/GITHUB-Vorngram--Cambo-181717?style=for-the-badge&logo=github)](https://github.com/Vorn45/Vorngram)
+[![Platform](https://img.shields.io/badge/PLATFORM-FLUTTER%20%7C%20ANDROID-02569B?style=for-the-badge&logo=flutter)](https://flutter.dev)
+[![Engine](https://img.shields.io/badge/ENGINE-MTPROTO%20TDLIB-2AABEE?style=for-the-badge&logo=telegram)](https://core.telegram.org/tdlib)
+[![WebRTC](https://img.shields.io/badge/CALLS-WEBRTC-333333?style=for-the-badge&logo=webrtc)](https://webrtc.org)
+[![License](https://img.shields.io/badge/LICENSE-MIT-00C853?style=for-the-badge)](LICENSE)
+
+</div>
+
+---
+
+## ⚡ Quick Start
+
+```bash
+$ git clone https://github.com/Vorn45/Vorngram.git
+$ cd Vorngram
+$ setup.bat              # on Windows (or ./setup.sh on macOS / Linux)
+$ flutter run
+```
 
 ---
 
@@ -8,20 +44,20 @@ Vorngram is a full-featured Telegram client and real-time communication platform
 
 ```
 Vorngram/
-├── lib/                   # 📱 Flutter Mobile App Source Code
-│   ├── models/            # Chat & User data models
+├── lib/                   # 📱 Flutter Mobile App (Dart)
+│   ├── models/            # Chat & User models
 │   ├── screens/           # Home, Chat, Auth, Settings, Call screens
 │   ├── services/          # TelegramService & TDLib native MTProto direct service
-│   ├── theme/             # Official Telegram Dark & Light themes
+│   ├── theme/             # Authentic Telegram Dark & Light themes
 │   └── widgets/           # ChatBubble, TelegramDrawer, VoiceNotePlayer
 │
-├── android/               # 🤖 Android runner with native TDLib (libtdjson.so) binaries
-├── ios/                   # 🍏 iOS runner
-├── web/                   # 🌐 Flutter Web runner
+├── android/               # 🤖 Android native runner with precompiled libtdjson.so binaries
+├── ios/                   # 🍏 iOS native runner
+├── web/                   # 🌐 Web application runner
 │
 └── server/                # 🖥️ Node.js Real-time Backend & Web Client
     ├── src/
-    │   ├── server.js          # WebRTC signaling, rooms & bot integration
+    │   ├── server.js          # WebRTC signaling, rooms & bot bridge
     │   ├── telegramAccount.js # GramJS MTProto client & event listeners
     │   └── config.js          # Bot & server configuration
     ├── public/            # Web application & WebRTC video call interface
@@ -48,30 +84,9 @@ Vorngram/
 
 ---
 
-## 🚀 Clone & Run (Quick Start)
+## 🚀 Running the Project
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/Vorn45/Vorngram.git
-cd Vorngram
-```
-
-### 2. Automated 1-Click Setup
-
-* **Windows:** Double-click `setup.bat` or run:
-  ```cmd
-  setup.bat
-  ```
-* **macOS / Linux:**
-  ```bash
-  chmod +x setup.sh && ./setup.sh
-  ```
-
----
-
-## 📱 Running the App
-
-### Mobile App (Flutter)
+### 📱 1. Mobile App (Flutter)
 ```bash
 flutter pub get
 flutter run
@@ -83,7 +98,7 @@ flutter build apk --release
 ```
 *The APK will be located at `build/app/outputs/flutter-apk/app-release.apk`.*
 
-### Companion Backend Server (`server/`)
+### 🖥️ 2. Companion Backend Server (`server/`)
 ```bash
 cd server
 npm install
@@ -94,4 +109,4 @@ npm start
 ---
 
 ## 📄 License
-MIT License
+Distributed under the MIT License. See `LICENSE` for more information.

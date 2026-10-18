@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TELEGRAM WEB | Real-Time Chat, WebRTC & Account Sync</title>
+    <meta name="description" content="Telegram Web Clone featuring real-time messaging, MTProto Telegram Account Sync, WebRTC Voice & HD Video calls.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="telegram-app">
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <div class="user-profile-summary">
+                    <div class="avatar my-avatar" id="my-avatar">👨‍🚀</div>
+                    <div class="user-meta">
+                        <span class="my-username" id="my-username">User_0000</span>
+                        <span class="user-status-text" id="my-status-text">online</span>
+                    </div>
+                </div>
+                <div class="sidebar-actions">
+                    <button class="icon-btn tg-connect-badge-btn" id="btn-open-tg-login" title="Connect Telegram Account">
+                        <span class="tg-badge-icon">✈️</span>
+                        <span class="tg-badge-label" id="tg-connect-status-label">Connect</span>
+                    </button>
+                    <button class="icon-btn" id="btn-open-send-tg-modal" title="Send to Telegram @User or Phone">✏️</button>
+                    <button class="icon-btn" id="btn-edit-profile" title="Edit Profile">⚙️</button>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-box-wrap">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="chat-search" placeholder="Search chats or users...">
+                </div>
+            </div>
+
+            <!-- Chat Filters / Tabs -->
+            <div class="chat-tabs">
+                <button class="chat-tab active" data-filter="all">All Chats</button>
+                <button class="chat-tab" data-filter="telegram">Telegram (<span id="tg-chat-count">0</span>)</button>
+                <button class="chat-tab" data-filter="mock">🎭 Fake Chats</button>
+                <button class="chat-tab" data-filter="channels">Channels</button>
+                <button class="chat-tab" data-filter="direct">Web (<span id="online-count">1</span>)</button>
+            </div>
+
+            <!-- Chat List Scrollable -->
+            <div class="chat-list" id="chat-list">
+                <!-- Channels & Users dynamically populated by app.js -->
+            </div>
+        </aside>
+
+        <!-- MAIN CHAT AREA -->
+        <main class="chat-area" id="chat-area">
+            <!-- Chat Header -->
+            <header class="chat-header" id="chat-header">
+                <button class="icon-btn mobile-back-btn" id="btn-mobile-back">←</button>
+                <div class="chat-header-info">
+                    <div class="avatar header-avatar" id="active-chat-avatar">💬</div>
+                    <div class="header-text-group">
+                        <h2 class="active-chat-title" id="active-chat-title">Global Telegram Lounge</h2>
+                        <span class="active-chat-subtitle" id="active-chat-subtitle">124 members</span>
+                    </div>
+                </div>
+
+                <!-- Call & Studio Actions in Header -->
+                <div class="header-call-actions">
+                    <button class="action-btn fake-studio-btn" id="btn-open-fake-modal" title="Fake Message & Chat Studio">
+                        <span class="btn-icon">🎭</span>
+                        <span class="btn-label">Fake Message</span>
+                    </button>
+                    <button class="action-btn call-btn" id="btn-start-audio-call" title="Voice Call">
+                        <span class="btn-icon">📞</span>
+                        <span class="btn-label">Voice Call</span>
+                    </button>
+                    <button class="action-btn video-btn" id="btn-start-video-call" title="Video Call">
+                        <span class="btn-icon">📹</span>
+                        <span class="btn-label">Video Call</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Message History Viewport -->
+            <div class="messages-container" id="messages-container">
+                <div class="messages-list" id="messages-list">
+                    <!-- Messages rendered dynamically -->
+                </div>
+                <div class="typing-indicator-bar hidden" id="typing-bar">
+                    <span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>
+                    <span id="typing-text">Someone is typing</span>
+                </div>
+            </div>
+
+            <!-- Message Input Area -->
+            <footer class="chat-input-wrapper">
+                <div class="input-controls">
+                    <button class="icon-btn" id="btn-attachment" title="Send Image / File">📎</button>
+                    <input type="file" id="file-attachment-input" class="hidden" accept="image/*,.pdf,.zip,.txt">
+                    
+                    <div class="text-input-wrap">
+                        <textarea id="message-input" placeholder="Write a message..." rows="1"></textarea>
+                    </div>
+
+                    <button class="icon-btn btn-fake-quick" id="btn-quick-fake" title="Quick Fake Message Studio">🎭</button>
+                    <button class="icon-btn" id="btn-emoji" title="Emojis">😊</button>
+                    <button class="icon-btn btn-record" id="btn-voice-record" title="Record Voice Note">🎙️</button>
+                    <button class="send-btn" id="btn-send-message" title="Send Message">
+                        <span>➤</span>
+                    </button>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- =========================================================
+         TELEGRAM ACCOUNT CONNECT MODAL
+    ========================================================= -->
+    <div id="tg-login-modal" class="modal-overlay hidden">
+        <div class="modal-card tg-auth-card">
+            <div class="tg-modal-header">
+                <div class="tg-auth-logo">✈️</div>
+                <h3 id="tg-modal-title">Connect Telegram Account</h3>
+                <p class="tg-modal-desc" id="tg-modal-desc">Sync your real Telegram chats, groups, and direct messages.</p>
+            </div>
+
+            <div id="tg-auth-error" class="auth-error-msg hidden"></div>
+
+            <!-- STEP 1: Phone Number Input -->
+            <div id="tg-step-phone" class="auth-step">
+                <div class="form-group">
+                    <label for="tg-phone-input">Phone Number (with Country Code):</label>
+                    <input type="tel" id="tg-phone-input" placeholder="+855 12 345 678" autocomplete="tel">
+                    <small class="form-hint">E.g. +855... (Cambodia) or +1... (US)</small>
+                </div>
+
+                <!-- Advanced API Credentials Toggle -->
+                <details class="advanced-tg-creds">
+                    <summary>Custom API ID & Hash (Optional)</summary>
+                    <div class="form-group" style="margin-top: 8px;">
+                        <label for="tg-api-id-input">API ID:</label>
+                        <input type="text" id="tg-api-id-input" placeholder="Default: 2040">
+                    </div>
+                    <div class="form-group">
+                        <label for="tg-api-hash-input">API Hash:</label>
+                        <input type="text" id="tg-api-hash-input" placeholder="Default API Hash">
+                    </div>
+                </details>
+
+                <div class="modal-footer">
+                    <button class="btn-ghost" id="btn-close-tg-modal">Cancel</button>
+                    <button class="btn-primary" id="btn-tg-send-code">
+                        <span class="btn-txt">Send Login Code</span>
+                        <span class="btn-loader hidden" id="loader-send-code">⏳</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 2: Enter Verification Code -->
+            <div id="tg-step-code" class="auth-step hidden">
+                <div class="form-group">
+                    <label for="tg-code-input">Enter 5-digit Telegram Code:</label>
+                    <input type="text" id="tg-code-input" placeholder="12345" maxlength="10" autocomplete="one-time-code">
+                    <small class="form-hint">Check your official Telegram app for the login code.</small>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-ghost" id="btn-back-to-phone">Back</button>
+                    <button class="btn-primary" id="btn-tg-verify-code">
+                        <span class="btn-txt">Verify & Connect</span>
+                        <span class="btn-loader hidden" id="loader-verify-code">⏳</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Enter 2FA Password -->
+            <div id="tg-step-2fa" class="auth-step hidden">
+                <div class="form-group">
+                    <label for="tg-2fa-input">Two-Step Verification Password:</label>
+                    <input type="password" id="tg-2fa-input" placeholder="Your 2FA Cloud Password">
+                    <small class="form-hint">Your Telegram account has 2FA enabled.</small>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-ghost" id="btn-back-to-code">Back</button>
+                    <button class="btn-primary" id="btn-tg-verify-2fa">
+                        <span class="btn-txt">Unlock & Connect</span>
+                        <span class="btn-loader hidden" id="loader-verify-2fa">⏳</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 4: Connected Account State -->
+            <div id="tg-step-connected" class="auth-step hidden">
+                <div class="connected-account-box">
+                    <div class="avatar tg-acc-avatar" id="tg-acc-avatar">👤</div>
+                    <div class="tg-acc-details">
+                        <h4 id="tg-acc-name">User Name</h4>
+                        <span class="tg-acc-username" id="tg-acc-username">@username</span>
+                        <span class="tg-acc-phone" id="tg-acc-phone">+855...</span>
+                        <div class="tg-live-indicator">🟢 Telegram Account Live & Synced</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-danger" id="btn-tg-logout">Disconnect Account</button>
+                    <button class="btn-primary" id="btn-tg-done">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         WEBRTC VOICE & VIDEO CALL MODAL OVERLAY
+    ========================================================= -->
+    <div id="call-modal" class="call-modal-overlay hidden">
+        <div class="call-window">
+            <div class="call-top-bar">
+                <div class="call-peer-info">
+                    <div class="avatar call-avatar-small" id="call-peer-avatar">👨‍🚀</div>
+                    <div>
+                        <h3 id="call-peer-name">Calling User...</h3>
+                        <span class="call-status-badge" id="call-status-label">CONNECTING...</span>
+                    </div>
+                </div>
+                <div class="call-timer-badge" id="call-timer">00:00</div>
+            </div>
+
+            <div class="call-video-grid" id="call-video-grid">
+                <div class="remote-video-wrap" id="remote-video-wrap">
+                    <video id="remote-video" autoplay playsinline></video>
+                    <div class="audio-only-placeholder" id="remote-audio-placeholder">
+                        <div class="pulsing-call-avatar" id="remote-call-avatar-big">👨‍🚀</div>
+                        <h2 id="remote-audio-name">Connecting Audio...</h2>
+                    </div>
+                </div>
+
+                <div class="local-video-wrap" id="local-video-wrap">
+                    <video id="local-video" autoplay playsinline muted></video>
+                    <div class="local-cam-off-badge hidden" id="local-cam-off-badge">Camera Off</div>
+                </div>
+            </div>
+
+            <div class="call-controls-bar">
+                <button class="call-ctrl-btn" id="btn-toggle-mic" title="Mute / Unmute Mic">
+                    <span class="icon" id="mic-icon">🎙️</span>
+                    <span class="ctrl-label">Mute</span>
+                </button>
+                <button class="call-ctrl-btn" id="btn-toggle-cam" title="Turn On / Off Camera">
+                    <span class="icon" id="cam-icon">📹</span>
+                    <span class="ctrl-label">Camera</span>
+                </button>
+                <button class="call-ctrl-btn" id="btn-share-screen" title="Share Screen">
+                    <span class="icon">🖥️</span>
+                    <span class="ctrl-label">Screen</span>
+                </button>
+                <button class="call-ctrl-btn end-call-btn" id="btn-end-call" title="End Call">
+                    <span class="icon">🛑</span>
+                    <span class="ctrl-label">End Call</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INCOMING CALL DIALOG -->
+    <div id="incoming-call-dialog" class="incoming-call-card hidden">
+        <div class="incoming-avatar-pulse">
+            <div class="avatar incoming-avatar" id="inc-caller-avatar">👨‍🚀</div>
+        </div>
+        <h3 id="inc-caller-name">User Calling...</h3>
+        <p id="inc-call-type">Incoming WebRTC Video Call</p>
+        <div class="incoming-actions">
+            <button class="incoming-btn btn-decline" id="btn-decline-call">✕ DECLINE</button>
+            <button class="incoming-btn btn-accept" id="btn-accept-call">📞 ANSWER</button>
+        </div>
+    </div>
+
+    <!-- PROFILE EDIT MODAL -->
+    <div id="profile-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h3>EDIT YOUR PROFILE</h3>
+            <div class="avatar-picker-row">
+                <label>Choose Avatar:</label>
+                <div class="avatars-grid" id="avatars-picker">
+                    <span class="avatar-opt">👨‍🚀</span>
+                    <span class="avatar-opt">👩‍💻</span>
+                    <span class="avatar-opt">🧙‍♂️</span>
+                    <span class="avatar-opt">🤖</span>
+                    <span class="avatar-opt">🦊</span>
+                    <span class="avatar-opt">⚡</span>
+                    <span class="avatar-opt">🛡️</span>
+                    <span class="avatar-opt">👾</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-username">Display Name:</label>
+                <input type="text" id="input-username" placeholder="Your username..." maxlength="25">
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" id="btn-cancel-profile">Cancel</button>
+                <button class="btn-primary" id="btn-save-profile">Save Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         FAKE MESSAGE & CHAT STUDIO MODAL
+    ========================================================= -->
+    <div id="fake-modal" class="modal-overlay hidden">
+        <div class="modal-card fake-modal-card">
+            <div class="fake-modal-header">
+                <div class="fake-modal-logo">🎭</div>
+                <div class="fake-modal-title-wrap">
+                    <h3>Fake Message Studio</h3>
+                    <p>Create & simulate authentic Telegram messages and custom chats</p>
+                </div>
+                <button class="icon-btn btn-close-modal" id="btn-close-fake-modal" title="Close">✕</button>
+            </div>
+
+            <!-- Tabs inside Modal -->
+            <div class="fake-tab-nav">
+                <button class="fake-tab-btn active" data-tab="tab-fake-msg">💬 Inject Message</button>
+                <button class="fake-tab-btn" data-tab="tab-fake-chat">👤 Create Fake Chat</button>
+                <button class="fake-tab-btn" data-tab="tab-fake-bot">🤖 Secret Bot Bridge</button>
+            </div>
+
+            <!-- Tab 1: Inject Message -->
+            <div id="tab-fake-msg" class="fake-tab-content">
+                <!-- Target Chat -->
+                <div class="fake-form-row">
+                    <label>Destination Chat:</label>
+                    <span class="fake-dest-badge" id="fake-dest-label">Global Telegram Lounge</span>
+                </div>
+
+                <!-- Direction Toggle -->
+                <div class="direction-toggle-row">
+                    <label>Message Direction:</label>
+                    <div class="dir-toggle-group">
+                        <button type="button" class="dir-btn active" id="btn-dir-in" data-dir="in">📥 Incoming (Contact)</button>
+                        <button type="button" class="dir-btn" id="btn-dir-out" data-dir="out">📤 Outgoing (Me)</button>
+                    </div>
+                </div>
+
+                <!-- Sender Details (shown for Incoming) -->
+                <div id="fake-sender-section" class="form-group">
+                    <label>Quick Sender Presets:</label>
+                    <div class="preset-chips-wrap">
+                        <button type="button" class="preset-chip" data-name="Pavel Durov" data-avatar="✈️" data-verified="true">⭐ Pavel Durov</button>
+                        <button type="button" class="preset-chip" data-name="Telegram Security" data-avatar="🛡️" data-verified="true">🛡️ Telegram Security</button>
+                        <button type="button" class="preset-chip" data-name="Elon Musk" data-avatar="🚀" data-verified="false">🚀 Elon Musk</button>
+                        <button type="button" class="preset-chip" data-name="Bank Notification" data-avatar="🏦" data-verified="false">🏦 Bank Alert</button>
+                        <button type="button" class="preset-chip" data-name="VIP Trader" data-avatar="💎" data-verified="false">💎 VIP Trader</button>
+                        <button type="button" class="preset-chip" data-name="Secret Admirer" data-avatar="💌" data-verified="false">💌 Secret Admirer</button>
+                    </div>
+
+                    <div class="fake-inputs-grid">
+                        <div>
+                            <label for="fake-sender-name">Sender Name:</label>
+                            <input type="text" id="fake-sender-name" value="Pavel Durov" placeholder="e.g. Pavel Durov">
+                        </div>
+                        <div>
+                            <label for="fake-sender-avatar">Avatar (Emoji or URL):</label>
+                            <input type="text" id="fake-sender-avatar" value="✈️" placeholder="Emoji e.g. ✈️">
+                        </div>
+                    </div>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="fake-sender-verified" checked>
+                        <span>Add Official Telegram Blue Checkmark Badge (✓)</span>
+                    </label>
+                </div>
+
+                <!-- Quick Message Templates -->
+                <div class="form-group">
+                    <label>Quick Message Templates:</label>
+                    <div class="preset-chips-wrap">
+                        <button type="button" class="preset-msg-chip" data-text="Your Telegram login code: 82914. Do not give this code to anyone, even if they say they're from Telegram!">🔒 Login Code</button>
+                        <button type="button" class="preset-msg-chip" data-text="Payment Confirmed: +10,000.00 USDT received in your Telegram Wallet.">💰 Payment Alert</button>
+                        <button type="button" class="preset-msg-chip" data-text="🔥 Secret Message: See you tonight at the private meeting. Keep this confidential.">🕵️ Secret Message</button>
+                        <button type="button" class="preset-msg-chip" data-text="Hey! Did you see the announcement? Everything is ready to launch.">👋 Greeting</button>
+                    </div>
+                </div>
+
+                <!-- Message Text -->
+                <div class="form-group">
+                    <label for="fake-msg-text">Message Content:</label>
+                    <textarea id="fake-msg-text" rows="3" placeholder="Write message text here...">Welcome to Telegram! Your account privacy and freedom are now fully secured.</textarea>
+                </div>
+
+                <!-- Timestamp & Status -->
+                <div class="fake-inputs-grid">
+                    <div>
+                        <label for="fake-msg-time">Timestamp:</label>
+                        <input type="text" id="fake-msg-time" placeholder="e.g. Just now or 10:45 AM">
+                    </div>
+                    <div>
+                        <label for="fake-msg-status">Delivery Status:</label>
+                        <select id="fake-msg-status">
+                            <option value="read">✓✓ Read (Double Blue)</option>
+                            <option value="delivered">✓✓ Delivered</option>
+                            <option value="sent">✓ Sent</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Simulation Mode -->
+                <div class="form-group">
+                    <label>Delivery Method:</label>
+                    <div class="sim-mode-select">
+                        <label class="radio-label">
+                            <input type="radio" name="sim-mode" value="now" checked>
+                            <span>⚡ Inject Instantly</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="sim-mode" value="delayed">
+                            <span>⏳ Simulate 3-Second Typing Indicator & Notification Ding</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-ghost" id="btn-cancel-fake-msg">Cancel</button>
+                    <button type="button" class="btn-primary" id="btn-submit-fake-msg">🚀 Insert Fake Message</button>
+                </div>
+            </div>
+
+            <!-- Tab 2: Create Fake Chat -->
+            <div id="tab-fake-chat" class="fake-tab-content hidden">
+                <div class="form-group">
+                    <label for="fake-chat-name">Contact / Channel Name:</label>
+                    <input type="text" id="fake-chat-name" placeholder="e.g. Elon Musk or VIP Insider Club">
+                </div>
+                <div class="fake-inputs-grid">
+                    <div>
+                        <label for="fake-chat-type">Chat Type:</label>
+                        <select id="fake-chat-type">
+                            <option value="user">Private Chat</option>
+                            <option value="channel">Telegram Channel</option>
+                            <option value="group">Group Chat</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="fake-chat-avatar">Avatar (Emoji or URL):</label>
+                        <input type="text" id="fake-chat-avatar" value="👑" placeholder="Emoji e.g. 👑">
+                    </div>
+                </div>
+                <div class="fake-inputs-grid">
+                    <div>
+                        <label for="fake-chat-subtitle">Subtitle / Members:</label>
+                        <input type="text" id="fake-chat-subtitle" placeholder="e.g. online or 1.2M subscribers">
+                    </div>
+                    <div>
+                        <label for="fake-chat-unread">Unread Badge Count:</label>
+                        <input type="number" id="fake-chat-unread" value="1" min="0" max="99">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="fake-chat-verified" checked>
+                        <span>Add Verified Badge (✓) to Header and Chat List</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="fake-chat-initial-msg">Initial First Message:</label>
+                    <textarea id="fake-chat-initial-msg" rows="2" placeholder="First message in this chat...">Hey there, great to connect with you on Telegram!</textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-ghost" id="btn-cancel-fake-chat">Cancel</button>
+                    <button type="button" class="btn-primary" id="btn-submit-fake-chat">➕ Create & Open Chat</button>
+                </div>
+            </div>
+
+            <!-- Tab 3: Secret Bot Bridge -->
+            <div id="tab-fake-bot" class="fake-tab-content hidden">
+                <div class="bot-info-card">
+                    <div class="bot-info-header">
+                        <div class="avatar bot-avatar">🕵️</div>
+                        <div>
+                            <h4>Secret Message Bot</h4>
+                            <span class="bot-tag">@SecreteMessage123454321ceeetbot</span>
+                        </div>
+                        <span class="status-pill-online">● ONLINE</span>
+                    </div>
+                    <p class="bot-info-desc">
+                        Your Telegram Bot is connected live! Any user can message this bot on Telegram or send commands:
+                    </p>
+                    <div class="bot-commands-list">
+                        <div class="bot-cmd-item">
+                            <code>/secret &lt;message&gt;</code>
+                            <span>Broadcasts an anonymous secret message into the Web Chat.</span>
+                        </div>
+                        <div class="bot-cmd-item">
+                            <code>/fake &lt;Name&gt; | &lt;Text&gt;</code>
+                            <span>Simulates a message from any custom sender name.</span>
+                        </div>
+                        <div class="bot-cmd-item">
+                            <code>/call</code>
+                            <span>Generates instant 1-click WebRTC Voice & Video call links.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-primary" id="btn-open-bot-room">💬 Open Bot Chat Room</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         SEND TO TELEGRAM USER MODAL
+    ========================================================= -->
+    <div id="send-tg-modal" class="modal-overlay hidden">
+        <div class="modal-card" style="max-width: 480px;">
+            <div class="fake-modal-header">
+                <div class="fake-modal-logo">📨</div>
+                <div class="fake-modal-title-wrap">
+                    <h3>Send to Telegram User</h3>
+                    <p>Send a real message to any Telegram @username or phone number</p>
+                </div>
+                <button class="icon-btn btn-close-modal" id="btn-close-send-tg-modal" title="Close">✕</button>
+            </div>
+
+            <div id="send-tg-status-msg" class="auth-error-msg hidden" style="margin-bottom: 12px;"></div>
+
+            <div class="form-group">
+                <label for="send-tg-target">Recipient (@Username or Phone Number):</label>
+                <input type="text" id="send-tg-target" placeholder="e.g. @username or +85512345678">
+                <small class="form-hint">Enter Telegram username with @ or full phone number with country code.</small>
+            </div>
+
+            <div class="form-group">
+                <label>Send From:</label>
+                <div class="dir-toggle-group">
+                    <button type="button" class="dir-btn active" id="btn-send-as-account" data-sender="account">👤 My Account (@P_Panhavorn)</button>
+                    <button type="button" class="dir-btn" id="btn-send-as-bot" data-sender="bot">🤖 Bot (@SecreteMessage...)</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="send-tg-text">Message Content:</label>
+                <textarea id="send-tg-text" rows="3" placeholder="Write your message here..."></textarea>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-ghost" id="btn-cancel-send-tg">Cancel</button>
+                <button type="button" class="btn-primary" id="btn-submit-send-tg">
+                    <span class="btn-txt">📤 Send to Telegram</span>
+                    <span class="btn-loader hidden" id="loader-send-tg">⏳</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="audio.js"></script>
+    <script src="webrtc.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1220 @@
+/* =========================================================
+   TELEGRAM CLONE - PREMIUM DARK DESIGN SYSTEM
+   Authentic Telegram Web K / Z Dark Theme with Glassmorphism
+========================================================= */
+
+:root {
+    --tg-bg-dark: #0e1621;
+    --tg-bg-sidebar: #17212b;
+    --tg-bg-header: #17212b;
+    --tg-bg-input: #17212b;
+    --tg-bg-hover: #202b36;
+    --tg-bg-active: #2b5278;
+    
+    --tg-accent-blue: #2481cc;
+    --tg-accent-hover: #2a9df4;
+    --tg-msg-out: #2b5278;
+    --tg-msg-out-hover: #315c86;
+    --tg-msg-in: #182533;
+    --tg-msg-in-hover: #1e2c3c;
+    
+    --tg-text-main: #f5f5f5;
+    --tg-text-secondary: #7f91a4;
+    --tg-text-time: #6c7883;
+    --tg-border: rgba(255, 255, 255, 0.06);
+    --tg-green: #4fae4e;
+    --tg-red: #ff595a;
+    --tg-badge-unread: #2481cc;
+
+    --font-main: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--tg-bg-dark);
+    font-family: var(--font-main);
+    color: var(--tg-text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.telegram-app {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--tg-bg-dark);
+}
+
+/* =========================================================
+   LEFT SIDEBAR
+========================================================= */
+.sidebar {
+    width: 380px;
+    min-width: 320px;
+    max-width: 420px;
+    height: 100%;
+    background-color: var(--tg-bg-sidebar);
+    border-right: 1px solid rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--tg-border);
+}
+
+.user-profile-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2481cc, #54a5e5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    user-select: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.my-username {
+    font-weight: 600;
+    font-size: 15px;
+    display: block;
+    color: var(--tg-text-main);
+}
+
+.user-status-text {
+    font-size: 12px;
+    color: var(--tg-green);
+    display: block;
+}
+
+.sidebar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    color: var(--tg-text-secondary);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--tg-text-main);
+}
+
+/* Telegram Connect Badge */
+.tg-connect-badge-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(36, 129, 204, 0.15);
+    border: 1px solid rgba(36, 129, 204, 0.4);
+    padding: 6px 12px;
+    border-radius: 16px;
+    color: #54a5e5;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tg-connect-badge-btn:hover {
+    background: rgba(36, 129, 204, 0.3);
+    color: #fff;
+}
+
+.tg-connect-badge-btn.connected {
+    background: rgba(79, 174, 78, 0.15);
+    border-color: rgba(79, 174, 78, 0.5);
+    color: #4fae4e;
+}
+
+/* Search Box */
+.search-box-wrap {
+    padding: 10px 16px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--tg-bg-dark);
+    padding: 8px 14px;
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: border-color 0.2s;
+}
+
+.search-box:focus-within {
+    border-color: var(--tg-accent-blue);
+}
+
+.search-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--tg-text-main);
+    font-size: 14px;
+    width: 100%;
+}
+
+.search-box input::placeholder {
+    color: var(--tg-text-secondary);
+}
+
+/* Chat Tabs */
+.chat-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--tg-border);
+    padding: 0 8px;
+}
+
+.chat-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px 4px;
+    color: var(--tg-text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+    text-align: center;
+}
+
+.chat-tab:hover {
+    color: var(--tg-text-main);
+}
+
+.chat-tab.active {
+    color: var(--tg-accent-blue);
+}
+
+.chat-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--tg-accent-blue);
+    border-radius: 3px 3px 0 0;
+}
+
+/* Chat List Items */
+.chat-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--tg-text-secondary);
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.badge-count {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    user-select: none;
+}
+
+.chat-item:hover {
+    background-color: var(--tg-bg-hover);
+}
+
+.chat-item.active {
+    background-color: var(--tg-bg-active);
+}
+
+.chat-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.chat-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.chat-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.chat-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--tg-text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.chat-time {
+    font-size: 11px;
+    color: var(--tg-text-time);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.chat-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.chat-snippet {
+    font-size: 13px;
+    color: var(--tg-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.chat-item.active .chat-snippet {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.unread-badge {
+    background-color: var(--tg-badge-unread);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 20px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.chat-type-badge {
+    font-size: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--tg-text-secondary);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.online-indicator-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--tg-green);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   MAIN CHAT AREA
+========================================================= */
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--tg-bg-dark);
+    position: relative;
+}
+
+.chat-header {
+    height: 60px;
+    background-color: var(--tg-bg-header);
+    border-bottom: 1px solid var(--tg-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 5;
+}
+
+.mobile-back-btn {
+    display: none;
+    margin-right: 8px;
+}
+
+.chat-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+}
+
+.header-text-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.active-chat-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--tg-text-main);
+}
+
+.active-chat-subtitle {
+    font-size: 12px;
+    color: var(--tg-text-secondary);
+}
+
+/* Call Actions in Header */
+.header-call-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.call-btn {
+    background: rgba(79, 174, 78, 0.15);
+    color: var(--tg-green);
+    border: 1px solid rgba(79, 174, 78, 0.3);
+}
+
+.call-btn:hover {
+    background: var(--tg-green);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(79, 174, 78, 0.4);
+}
+
+.video-btn {
+    background: rgba(36, 129, 204, 0.15);
+    color: var(--tg-accent-blue);
+    border: 1px solid rgba(36, 129, 204, 0.3);
+}
+
+.video-btn:hover {
+    background: var(--tg-accent-blue);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(36, 129, 204, 0.4);
+}
+
+/* =========================================================
+   MESSAGES VIEWPORT & CHAT BUBBLES
+========================================================= */
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    background-color: #0e1621;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
+    background-size: 20px 20px;
+}
+
+.messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 820px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.message-bubble {
+    max-width: 65%;
+    min-width: 80px;
+    padding: 8px 12px 6px 12px;
+    border-radius: 14px;
+    position: relative;
+    font-size: 14px;
+    line-height: 1.45;
+    word-break: break-word;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    margin-bottom: 2px;
+}
+
+.message-in {
+    align-self: flex-start;
+    background-color: var(--tg-msg-in);
+    color: var(--tg-text-main);
+    border-bottom-left-radius: 3px;
+}
+
+.message-out {
+    align-self: flex-end;
+    background-color: var(--tg-msg-out);
+    color: #ffffff;
+    border-bottom-right-radius: 3px;
+}
+
+.message-system {
+    align-self: center;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 16px;
+    padding: 5px 16px;
+    font-size: 12px;
+    color: var(--tg-text-secondary);
+    box-shadow: none;
+    max-width: 90%;
+    text-align: center;
+}
+
+.message-sender-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #54a5e5;
+    margin-bottom: 3px;
+}
+
+.message-text {
+    font-size: 14px;
+    color: #f5f5f5;
+    white-space: pre-wrap;
+}
+
+.message-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    margin-top: 3px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.55);
+    user-select: none;
+}
+
+.msg-status-ticks {
+    color: #4fae4e;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.msg-media-wrap {
+    margin: 4px 0 6px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.msg-media-img {
+    max-width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Typing Indicator Bar */
+.typing-indicator-bar {
+    font-size: 12px;
+    color: var(--tg-accent-blue);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    margin-top: 4px;
+}
+
+.typing-dots span {
+    animation: blink 1.4s infinite;
+    animation-fill-mode: both;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+    0% { opacity: 0.2; }
+    20% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+/* =========================================================
+   CHAT INPUT BAR
+========================================================= */
+.chat-input-wrapper {
+    background-color: var(--tg-bg-input);
+    padding: 12px 20px;
+    border-top: 1px solid var(--tg-border);
+}
+
+.input-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--tg-bg-dark);
+    border-radius: 24px;
+    padding: 6px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.text-input-wrap {
+    flex: 1;
+}
+
+.text-input-wrap textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--tg-text-main);
+    font-family: var(--font-main);
+    font-size: 14px;
+    resize: none;
+    max-height: 100px;
+    padding-top: 4px;
+}
+
+.text-input-wrap textarea::placeholder {
+    color: var(--tg-text-secondary);
+}
+
+.send-btn {
+    background: var(--tg-accent-blue);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.send-btn:hover {
+    background: var(--tg-accent-hover);
+    transform: scale(1.05);
+}
+
+/* =========================================================
+   MODALS & OVERLAYS
+========================================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-card {
+    background: var(--tg-bg-sidebar);
+    border: 1px solid var(--tg-border);
+    border-radius: 16px;
+    padding: 24px;
+    width: 90%;
+    max-width: 440px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.tg-modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tg-auth-logo {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.tg-modal-desc {
+    font-size: 13px;
+    color: var(--tg-text-secondary);
+    margin-top: 4px;
+}
+
+.auth-error-msg {
+    background: rgba(255, 89, 90, 0.15);
+    border: 1px solid rgba(255, 89, 90, 0.4);
+    color: #ff8586;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--tg-text-secondary);
+    margin-bottom: 6px;
+}
+
+.form-group input {
+    width: 100%;
+    background: var(--tg-bg-dark);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    border-color: var(--tg-accent-blue);
+    outline: none;
+}
+
+.form-hint {
+    display: block;
+    font-size: 12px;
+    color: var(--tg-text-secondary);
+    margin-top: 4px;
+}
+
+.advanced-tg-creds {
+    margin: 12px 0;
+    font-size: 13px;
+    color: var(--tg-text-secondary);
+    cursor: pointer;
+}
+
+.connected-account-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.tg-acc-avatar {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+    background: linear-gradient(135deg, #0088cc, #00b4d8);
+}
+
+.tg-acc-details h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.tg-acc-username {
+    display: block;
+    font-size: 13px;
+    color: #54a5e5;
+}
+
+.tg-acc-phone {
+    display: block;
+    font-size: 12px;
+    color: var(--tg-text-secondary);
+}
+
+.tg-live-indicator {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--tg-green);
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background: var(--tg-accent-blue);
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: var(--tg-accent-hover);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--tg-text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 9px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-ghost:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn-danger {
+    background: rgba(255, 89, 90, 0.15);
+    border: 1px solid rgba(255, 89, 90, 0.4);
+    color: #ff595a;
+    padding: 9px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-danger:hover {
+    background: #ff595a;
+    color: #fff;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Responsive Mobile Layout */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        max-width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .chat-area {
+        width: 100%;
+    }
+    .sidebar.mobile-hidden {
+        display: none;
+    }
+    .mobile-back-btn {
+        display: flex;
+    }
+    .header-call-actions .btn-label {
+        display: none;
+    }
+}
+
+/* =========================================================
+   FAKE MESSAGE & CHAT STUDIO STYLES
+========================================================= */
+.fake-studio-btn {
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.25), rgba(36, 129, 204, 0.25)) !important;
+    border: 1px solid rgba(186, 104, 200, 0.4) !important;
+    color: #e1bee7 !important;
+}
+
+.fake-studio-btn:hover {
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.45), rgba(36, 129, 204, 0.45)) !important;
+    border-color: #ba68c8 !important;
+    color: #fff !important;
+    box-shadow: 0 0 12px rgba(186, 104, 200, 0.3);
+}
+
+.btn-fake-quick {
+    color: #ba68c8 !important;
+}
+
+.btn-fake-quick:hover {
+    background: rgba(186, 104, 200, 0.15) !important;
+}
+
+/* Authentic Telegram Verified Checkmark Badge */
+.verified-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    background-color: var(--tg-accent-blue);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 9px;
+    font-weight: 900;
+    margin-left: 4px;
+    vertical-align: middle;
+    line-height: 1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.fake-modal-card {
+    max-width: 540px !important;
+    width: 92% !important;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.fake-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.fake-modal-logo {
+    font-size: 28px;
+    background: rgba(186, 104, 200, 0.15);
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.fake-modal-title-wrap h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--tg-text-main);
+}
+
+.fake-modal-title-wrap p {
+    font-size: 0.8rem;
+    color: var(--tg-text-secondary);
+}
+
+.btn-close-modal {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 14px;
+}
+
+/* Tabs inside Modal */
+.fake-tab-nav {
+    display: flex;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 3px;
+    margin-bottom: 16px;
+    gap: 4px;
+}
+
+.fake-tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--tg-text-secondary);
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.fake-tab-btn.active {
+    background: var(--tg-accent-blue);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(36, 129, 204, 0.4);
+}
+
+/* Destination Badge */
+.fake-form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+}
+
+.fake-dest-badge {
+    color: var(--tg-accent-hover);
+    font-weight: 600;
+    background: rgba(36, 129, 204, 0.15);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+/* Direction Toggle */
+.direction-toggle-row {
+    margin-bottom: 14px;
+}
+
+.direction-toggle-row label {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--tg-text-secondary);
+    margin-bottom: 6px;
+}
+
+.dir-toggle-group {
+    display: flex;
+    gap: 8px;
+}
+
+.dir-btn {
+    flex: 1;
+    padding: 9px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--tg-border);
+    color: var(--tg-text-secondary);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dir-btn.active {
+    background: rgba(36, 129, 204, 0.2);
+    border-color: var(--tg-accent-blue);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Preset Chips */
+.preset-chips-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
+
+.preset-chip, .preset-msg-chip {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--tg-text-main);
+    padding: 5px 10px;
+    border-radius: 14px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.preset-chip:hover, .preset-msg-chip:hover {
+    background: rgba(36, 129, 204, 0.25);
+    border-color: var(--tg-accent-blue);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.fake-inputs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.fake-inputs-grid label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--tg-text-secondary);
+    margin-bottom: 4px;
+}
+
+.fake-inputs-grid input, .fake-inputs-grid select {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--tg-border);
+    color: var(--tg-text-main);
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.checkbox-label, .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--tg-text-secondary);
+    cursor: pointer;
+    margin: 8px 0;
+}
+
+.checkbox-label input, .radio-label input {
+    cursor: pointer;
+    accent-color: var(--tg-accent-blue);
+}
+
+.sim-mode-select {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+/* Bot Info Card */
+.bot-info-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--tg-border);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 16px;
+}
+
+.bot-info-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.bot-avatar {
+    font-size: 24px;
+    background: rgba(36, 129, 204, 0.2);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bot-tag {
+    font-size: 0.8rem;
+    color: var(--tg-accent-blue);
+    font-family: var(--font-mono);
+}
+
+.status-pill-online {
+    margin-left: auto;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--tg-green);
+    background: rgba(79, 174, 78, 0.15);
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+
+.bot-info-desc {
+    font-size: 0.83rem;
+    color: var(--tg-text-secondary);
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.bot-commands-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bot-cmd-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+
+.bot-cmd-item code {
+    color: #e1bee7;
+    font-family: var(--font-mono);
+    font-weight: 600;
+}
+
+.bot-cmd-item span {
+    color: var(--tg-text-secondary);
+    font-size: 0.75rem;
+}

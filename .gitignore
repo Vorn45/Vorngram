@@ -50,4 +50,14 @@ local.properties
 # TDLib local databases & files
 **/tdlib_data/
 **/tdlib_files/
-.env
+
+# Node.js backend
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+
+# Secrets & Sessions
+**/.env
+!**/.env.example
+**/session.json
+

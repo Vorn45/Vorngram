@@ -1,67 +1,77 @@
-# ✈️ Telegram Mobile App (Flutter & Dart)
+# 🚀 Vorngram - Complete Telegram Platform & Mobile Client
 
-A native Flutter cross-platform mobile application replicating the authentic Telegram mobile client experience with real-time WebSocket messaging, WebRTC calling UI, dark/light themes, and seamless sync with your local Node.js backend & Telegram Bot bridge.
+Vorngram is a full-featured Telegram client and real-time communication platform featuring direct MTProto TDLib connection (zero server needed), real-time WebRTC audio/video calling, a Telegram Bot bridge, and a custom message studio.
+
+---
+
+## 📁 Repository Structure
+
+```
+Vorngram/
+├── lib/                   # 📱 Flutter Mobile App Source Code
+│   ├── models/            # Chat & User data models
+│   ├── screens/           # Home, Chat, Auth, Settings, Call screens
+│   ├── services/          # TelegramService & TDLib native MTProto direct service
+│   ├── theme/             # Official Telegram Dark & Light themes
+│   └── widgets/           # ChatBubble, TelegramDrawer, VoiceNotePlayer
+│
+├── android/               # 🤖 Android runner with native TDLib (libtdjson.so) binaries
+├── ios/                   # 🍏 iOS runner
+├── web/                   # 🌐 Flutter Web runner
+│
+└── server/                # 🖥️ Node.js Real-time Backend & Web Client
+    ├── src/
+    │   ├── server.js          # WebRTC signaling, rooms & bot integration
+    │   ├── telegramAccount.js # GramJS MTProto client & event listeners
+    │   └── config.js          # Bot & server configuration
+    ├── public/            # Web application & WebRTC video call interface
+    └── .env.example       # Backend environment template
+```
 
 ---
 
 ## ✨ Features
 
-- **Authentic Telegram UI**:
-  - Sleek Telegram Dark & Light themes (with Telegram Blue `#2AABEE`, dark chat background `#0E1621`, and message bubbles).
-  - Side navigation drawer with profile header, phone number, saved messages, contacts, calls, and settings.
-  - Chat list tabs: **All**, **Channels**, **Bots**, and **Groups** with unread count pills, pins, and verified checkmarks (e.g. Pavel Durov, Secret Bot).
-- **Interactive Chat Interface**:
-  - Outgoing and incoming message bubbles with read checkmarks (`✓✓`), timestamps, and sender accent colors.
+- **Direct Native MTProto Connection (0 Servers Needed):**
+  - Integrated `handy_tdlib_next` for direct connection to Telegram Data Centers.
+  - Multi-step phone number verification, 5-digit OTP, and 2FA cloud password support.
+  - Complete sync for Channels, Groups, Direct Chats, and Saved Messages.
+- **Node.js Companion Server (`server/`):**
+  - WebRTC peer-to-peer audio and video calling signaling.
+  - Telegram Bot Bridge with admin notifications.
+  - 🎭 Fake Message Studio for message mocking and staging.
+- **Authentic Telegram UI:**
+  - Official Telegram Dark & Light themes (`#2AABEE`, `#0E1621`).
   - Interactive reaction picker (❤️, 👍, 🔥, 🎉, 😂, 👏, 🚀) via long press.
   - Animated voice notes widget with audio waveforms.
-  - Attachment bottom sheet (Gallery, Camera, Files, Live Location).
-  - Quick emoji tray and text input.
-- **Voice & Video Calling**:
-  - Telegram end-to-end encrypted 4-emoji verification keys (🦊 ⚡ 🎸 💎).
-  - Ringing/pulsing animation, call duration timer, speaker toggle, mic mute, and camera flip.
-- **Backend & Telegram Bridge Integration**:
-  - Built-in `TelegramService` connecting to your local Node.js WebSocket backend (`ws://10.0.2.2:3000` for Android emulator or `ws://localhost:3000` for desktop/tunnel).
-  - Seamless fallback demo mode: the app runs immediately even before starting the backend!
+  - Attachment sheets (Gallery, Camera, Files, Location).
 
 ---
 
-## 🚀 How to Run
+## 🚀 Getting Started
 
-### 1. Run on Windows Desktop (Fastest Preview)
-Double-click `run-windows.bat` or run:
+### 1. Mobile App (Flutter)
 ```bash
-cd d:\Tool\telegram_app
-flutter run -d windows
+cd Vorngram
+flutter pub get
+flutter run
 ```
 
-### 2. Run on Android Emulator (Pixel 7)
-Double-click `run-android.bat` or run:
+To build a release APK for Android:
 ```bash
-cd d:\Tool\telegram_app
-flutter emulators --launch Pixel_7
-flutter run -d android
+flutter build apk --release
 ```
 
-### 3. Build Android APK
-Double-click `build-apk.bat` or run:
+### 2. Companion Backend Server (`server/`)
 ```bash
-cd d:\Tool\telegram_app
-flutter build apk
+cd Vorngram/server
+npm install
+cp .env.example .env
+# Edit .env with your BOT_TOKEN and ADMIN_IDS
+npm start
 ```
-The generated `.apk` will be in `build/app/outputs/flutter-apk/app-release.apk`.
 
 ---
 
-## 🔗 Connecting to the Backend Server
-
-1. Start your Node.js backend in `d:\Tool\Telegram`:
-   ```bash
-   cd d:\Tool\Telegram
-   npm start
-   ```
-2. Open the Telegram Flutter app -> Menu / Drawer -> **Settings**.
-3. Under **Backend Server & WebSocket**, enter:
-   - For Android Emulator: `ws://10.0.2.2:3000`
-   - For Windows Desktop: `ws://localhost:3000`
-   - For remote testing: Your Cloudflare tunnel URL from `start-public-free.bat` (e.g. `wss://...`)
-4. Tap **Connect / Save URL**.
+## 📄 License
+MIT License

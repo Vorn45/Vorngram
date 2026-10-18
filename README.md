@@ -48,28 +48,48 @@ Vorngram/
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Clone & Run (Quick Start)
 
-### 1. Mobile App (Flutter)
+### 1. Clone the repository
 ```bash
+git clone https://github.com/Vorn45/Vorngram.git
 cd Vorngram
+```
+
+### 2. Automated 1-Click Setup
+
+* **Windows:** Double-click `setup.bat` or run:
+  ```cmd
+  setup.bat
+  ```
+* **macOS / Linux:**
+  ```bash
+  chmod +x setup.sh && ./setup.sh
+  ```
+
+---
+
+## 📱 Running the App
+
+### Mobile App (Flutter)
+```bash
 flutter pub get
 flutter run
 ```
 
-To build a release APK for Android:
+To build a production release APK for Android:
 ```bash
 flutter build apk --release
 ```
+*The APK will be located at `build/app/outputs/flutter-apk/app-release.apk`.*
 
-### 2. Companion Backend Server (`server/`)
+### Companion Backend Server (`server/`)
 ```bash
-cd Vorngram/server
+cd server
 npm install
-cp .env.example .env
-# Edit .env with your BOT_TOKEN and ADMIN_IDS
 npm start
 ```
+*Opens at `http://localhost:3000` with the WebRTC Calling Portal & Fake Message Studio.*
 
 ---
 
